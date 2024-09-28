@@ -7,7 +7,7 @@ exports.summarizeCSV = (filePath) => {
     const summary = {};
 
     fs.createReadStream(filePath)
-      .pipe(csv({ headers: false }))
+      .pipe(csv( {headers : true}))
       .on('data', (row) => {
         console.log('Processing row:', row);
 
@@ -35,11 +35,6 @@ exports.summarizeCSV = (filePath) => {
         } else {
           // Otherwise, add or update the amount owed
           summary[key] = (summary[key] || 0) + amount;
-        }
-
-        // Add additional check for direct debts
-        if (debtor === 'Alex' && creditor === 'Carl') {
-          summary['Alex,Carl'] = (summary['Alex,Carl'] || 0) + amount;
         }
       })
       .on('end', () => {
