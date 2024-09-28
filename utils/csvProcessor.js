@@ -5,9 +5,12 @@ const csv = require('csv-parser');
 exports.summarizeCSV = (filePath) => {
   return new Promise((resolve, reject) => {
     const summary = {};
+    const formattedAmounts = {};
+    
+    
 
     fs.createReadStream(filePath)
-      .pipe(csv( {headers : true}))
+      .pipe(csv( {headers : false}))
       .on('data', (row) => {
         console.log('Processing row:', row);
 
@@ -44,5 +47,6 @@ exports.summarizeCSV = (filePath) => {
       .on('error', (error) => {
         reject(error); // Reject the promise on error
       });
+     
   });
 };

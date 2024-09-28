@@ -40,7 +40,7 @@ router.post('/', upload.single('file'), (req, res) => {
         const results = [];
         for (const key in totalOwed) {
           const [debtor, creditor] = key.split('-');
-          results.push({ debtor, creditor, total: totalOwed[key].toFixed(2) });
+          results.push({ debtor, creditor, total: totalOwed[key].toFixed(2) }); //format the results to two decimal places
         }
 
         res.send({ message: 'File uploaded and processed', data: results });  // Send the totals back in the response
