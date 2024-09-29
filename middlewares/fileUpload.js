@@ -10,7 +10,8 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   }
 });
-
+ 
+//Ensure only csv files are uploaded
 const fileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname);
   if (ext !== '.csv') {
@@ -19,8 +20,22 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
+// Middleware to handle file errors
+const handleFileUploadError = (err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(500).json({ error: err.message });
+  } else if (err) {
+    return res.status(400).json({ error: 'Only CSV files are allowed' });
+  }
+  next();
+};
+
 const upload = multer({ storage, fileFilter });
 
-module.exports = upload;  // Export multer upload middleware
+module.exports = { upload ,handleFileUploadError };  // Export multer upload middleware
+
+
+
+
 
 

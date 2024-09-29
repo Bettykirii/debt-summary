@@ -3,3 +3,10 @@ debts.csv
 output/
 uploads/
 
+# Ignore all files in the tests folder
+/tests/*
+
+# But keep the tests folder itself
+!tests/
+
+

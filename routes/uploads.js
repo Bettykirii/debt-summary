@@ -1,11 +1,11 @@
 const express = require('express');
 const fs = require('fs');
 const csv = require('csv-parser');  // CSV parsing library
-const upload = require('../middlewares/fileUpload'); // Make sure multer middleware is imported
+const { upload, handleFileUploadError }= require('../middlewares/fileUpload'); // Make sure multer middleware is imported
 const router = express.Router();
 
 // Use multer middleware to handle file uploads
-router.post('/', upload.single('file'), (req, res) => {
+router.post('/', upload.single('file'), handleFileUploadError, (req, res) => {
   if (req.file) {
     console.log('Uploaded file:', req.file);  // Log file information
 
